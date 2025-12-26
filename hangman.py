@@ -83,3 +83,43 @@ class Hangman:
                 letters += 1
                 print(f"{i}, ", end = " ") if letters < len(self.guesses) else print(f"{i}", end = " ")
             print("}")
+    
+    def user_input(self):
+        while True:
+            letter = input("\nMake your guess! Give us your letter: ").lower()
+            if len(letter) == 0:
+                print("\nYou can't give us nothing... Try again but introduce a letter this time!")
+            elif len(letter) > 1:
+                print("\nYou have to give us a letter and not a word as you just did. Try again!")
+            else:
+                if letter in {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"}:
+                    print("\nYou have introduced a number but it should be a letter of the alphabet. Try again!")
+                elif letter in self.guesses:
+                    print("\nYou have already selected that letter before! Try another one!")
+                else:
+                    print(f"\nYou have successfully selected the letter {letter}")
+                    break
+        return letter
+    
+    def process_guess(self, letter):
+        self.guesses.append(letter)
+        if letter not in self.team:
+            self.count +=1
+            print("\nSorry, your guess was wrong!")
+        else:
+            print("\nGreat! You have guessed a letter of the word correctly!")
+    
+    def check_victory(self):
+        flag = True
+        for i in self.team:
+            if i not in self.guesses:
+                flag = False
+                break
+        return flag
+    
+    def guess_word(self):
+        word = input("So... You want to guess the word, huh! Go ahead: ")
+        return True if word == self.team else False
+
+    def game_over(self):
+        return True if self.count >= self.max_errors else False
