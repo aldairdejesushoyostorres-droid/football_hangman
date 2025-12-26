@@ -57,9 +57,10 @@ class Hangman:
         self.team = random.choice(word_bank[self.league]).lower()
 
     def show_hint(self):
-        print(f"\nThe team you're trying to guess is from {self.league}")
+        print(f"The team you're trying to guess is from {self.league}!")
 
     def word_masker(self):
+        print("\nYou need to guesss this football team:\n")
         for i in self.team:
             if i == " ":
                 print(" ", end = " ")
@@ -67,3 +68,18 @@ class Hangman:
                 print(i, end = " ")
             else:
                 print("_", end = " ")
+        print("\n")
+    
+    def game_status(self):
+        self.word_masker()
+        self.show_hint()
+        print(f"These are your chances left for guessing the team: {self.max_errors - self.count}")
+        if len(self.guesses) == 0: 
+            print("You have not made any guesses yet")
+        else:
+            print("The letters you have used are the following: {", end = "")
+            letters = 0
+            for i in self.guesses:
+                letters += 1
+                print(f"{i}, ", end = " ") if letters < len(self.guesses) else print(f"{i}", end = " ")
+            print("}")
